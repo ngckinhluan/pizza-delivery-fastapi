@@ -1,13 +1,13 @@
 ﻿# auth_routes.py
-
 from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database import SessionLocal
-from schema import SignUpModel
+from schema import SignUpModel, LoginModel
 from models import User
 from werkzeug.security import generate_password_hash
+from fastapi_jwt_auth import AuthJWT
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -47,3 +47,8 @@ async def signup(user: SignUpModel, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     return new_user
+
+#login route
+@auth_router.post("/login")
+async def login():
+    pass 
